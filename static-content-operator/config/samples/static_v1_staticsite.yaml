@@ -1,0 +1,10 @@
+apiVersion: static.static.com/v1
+kind: StaticSite
+metadata:
+  name: staticsite-sample
+spec:
+  image: nginx:latest
+  port: 80
+  service:
+    type: NodePort
+    port: 80

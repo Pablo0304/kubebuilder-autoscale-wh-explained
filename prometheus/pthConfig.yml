@@ -1,0 +1,14 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: staticsite-sample
+  labels:
+    release: kps
+spec:
+  selector:
+    matchLabels:
+      app: staticsite
+      staticsite: staticsite-sample
+  endpoints:
+    - port: metrics
+      path: /metrics
