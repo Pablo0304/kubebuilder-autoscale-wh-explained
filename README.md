@@ -1,5 +1,7 @@
 # Static Website Operator + Prometheus + HPA (kind)
 
+![Diagrama de la infraestructura](img/diagram.png)
+
 Proyecto que demuestra un flujo completo de hosting estático en
 Kubernetes con observabilidad y autoscaling real:
 
@@ -9,6 +11,16 @@ Kubernetes con observabilidad y autoscaling real:
 - HPA escalando en base a requests por segundo.
 
 Todo está organizado por carpetas para poder repetir la instalación en frío.
+
+## Infraestructura (resumen)
+
+Este repo define una cadena completa dentro de un cluster kind:
+
+- Un CRD `StaticSite` y su operador (Kubebuilder) crean `ConfigMap`, `Deployment` y `Service`.
+- El `Deployment` incluye Nginx y un sidecar `nginx-prometheus-exporter` (métricas por pod).
+- Un `ServiceMonitor` permite que Prometheus scrapee `/metrics`.
+- Prometheus Adapter expone la métrica `nginx_http_requests_per_second` en `custom.metrics.k8s.io`.
+- El HPA escala el `Deployment` en base a esa métrica.
 
 ## Requisitos
 
